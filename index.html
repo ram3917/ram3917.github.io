@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html>
+
 <head>Hello Ranjan</head>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.min.js"></script>
 
 <body>
 
-<canvas id="myChart" width="600" height="400"></canvas>
+<div class="myDiv" style="height:400px; width:400px">
+
+<canvas id="myChart"></canvas>
 <script>
 var ctx = document.getElementById('myChart');
+
 var myChart = new Chart(ctx, {
   type: 'line',
   data: {
@@ -44,12 +48,14 @@ var myChart = new Chart(ctx, {
   options: {
     title: {
       display: true,
-      text: 'Tell me I am awesome!!'
+      text: 'Tell me I am awesome!!',
+      maintainAspectRatio:false
     }
   }
 });
 
 </script>
+</div>
 
 
 </body>
