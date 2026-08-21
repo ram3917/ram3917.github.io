@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rama Mallavarapu — ADAS &amp; Autonomous Systems Engineer</title>
+<meta name="description" content="Rama Mallavarapu — Software Engineer specializing in ADAS, sensor fusion, perception and autonomous driving systems. Berlin, Germany.">
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0e14;
+    --panel:#10161f;
+    --panel-2:#0d1219;
+    --line:#1e2733;
+    --accent:#00e5a0;
+    --accent-dim: rgba(0,229,160,0.14);
+    --amber:#ffb454;
+    --text:#e6edf3;
+    --muted:#8b98a5;
+    --mono: 'JetBrains Mono', monospace;
+    --display: 'Space Grotesk', sans-serif;
+    --body: 'Inter', sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--body);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+  .bg-grid{
+    position:fixed; inset:0; z-index:0; pointer-events:none;
+    background-image:
+      linear-gradient(rgba(30,39,51,0.5) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(30,39,51,0.5) 1px, transparent 1px);
+    background-size:48px 48px;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
+  }
+  .wrap{max-width:1080px; margin:0 auto; padding:0 28px; position:relative; z-index:1;}
+
+  /* NAV */
+  nav{
+    position:sticky; top:0; z-index:50;
+    backdrop-filter: blur(10px);
+    background:rgba(10,14,20,0.75);
+    border-bottom:1px solid var(--line);
+  }
+  nav .wrap{display:flex; align-items:center; justify-content:space-between; padding-top:16px; padding-bottom:16px;}
+  .brand{font-family:var(--mono); font-size:14px; letter-spacing:0.5px; display:flex; align-items:center; gap:10px;}
+  .brand .dot{width:8px;height:8px;border-radius:50%;background:var(--accent); box-shadow:0 0 8px var(--accent); animation:pulse 2s ease-in-out infinite;}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.35;}}
+  .navlinks{display:flex; gap:28px; font-family:var(--mono); font-size:13px; color:var(--muted);}
+  .navlinks a{text-decoration:none; transition:color .2s;}
+  .navlinks a:hover{color:var(--accent);}
+  .navlinks a::before{content:attr(data-idx); color:var(--accent); margin-right:6px;}
+  @media(max-width:760px){
+    .navlinks{display:none;}
+    nav .wrap{padding-top:14px; padding-bottom:14px;}
+  }
+
+  /* HERO */
+  header.hero{position:relative; padding:96px 0 72px; overflow:hidden;}
+  .eyebrow{
+    font-family:var(--mono); font-size:13px; color:var(--accent); letter-spacing:1.5px;
+    display:flex; align-items:center; gap:10px; margin-bottom:22px;
+  }
+  .eyebrow .line{width:32px; height:1px; background:var(--accent);}
+  h1.name{
+    font-family:var(--display); font-weight:700; letter-spacing:-1.5px;
+    font-size:clamp(40px, 7vw, 76px); margin:0 0 12px; line-height:1.02;
+  }
+  .role-line{font-family:var(--mono); font-size:clamp(15px,2vw,19px); color:var(--muted); margin:0 0 30px; min-height:1.6em;}
+  .role-line .cursor{color:var(--accent); animation:pulse 1s step-start infinite;}
+  .lede{max-width:620px; color:var(--text); font-size:16.5px; margin:0 0 40px; color:#c3cdd6;}
+  .cta-row{display:flex; gap:16px; flex-wrap:wrap; margin-bottom:64px;}
+  .btn{
+    font-family:var(--mono); font-size:13.5px; letter-spacing:.3px;
+    padding:13px 22px; border-radius:2px; text-decoration:none;
+    display:inline-flex; align-items:center; gap:10px; border:1px solid var(--line);
+    transition:all .2s;
+  }
+  .btn-primary{background:var(--accent); color:#04140e; border-color:var(--accent); font-weight:600;}
+  .btn-primary:hover{background:#1effb8; box-shadow:0 0 24px var(--accent-dim);}
+  .btn-ghost{color:var(--text); background:transparent;}
+  .btn-ghost:hover{border-color:var(--accent); color:var(--accent);}
+
+  /* HUD readout */
+  .hud{
+    display:grid; grid-template-columns:repeat(4,1fr); border:1px solid var(--line); border-radius:4px; overflow:hidden;
+    background:linear-gradient(180deg, var(--panel), var(--panel-2));
+  }
+  .hud > div{padding:20px 22px; border-right:1px solid var(--line); border-bottom:1px solid var(--line);}
+  .hud > div:last-child{border-right:none;}
+  .hud .val{font-family:var(--display); font-size:28px; font-weight:600; color:var(--accent);}
+  .hud .lbl{font-family:var(--mono); font-size:11px; color:var(--muted); letter-spacing:.5px; margin-top:4px; text-transform:uppercase;}
+  @media(max-width:700px){
+    .hud{grid-template-columns:repeat(2,1fr);}
+    .hud > div:nth-child(2){border-right:none;}
+  }
+
+  /* Radar decoration */
+  .radar{
+    position:absolute; right:-140px; top:-60px; width:520px; height:520px; z-index:0; opacity:.55;
+    pointer-events:none;
+  }
+  @media (max-width:900px){ .radar{display:none;} }
+
+  /* SECTIONS */
+  section{padding:88px 0; border-top:1px solid var(--line); position:relative;}
+  .sec-head{display:flex; align-items:baseline; gap:16px; margin-bottom:44px;}
+  .sec-num{font-family:var(--mono); color:var(--accent); font-size:13px;}
+  h2.sec-title{font-family:var(--display); font-size:clamp(24px,3vw,32px); margin:0; letter-spacing:-.5px;}
+  .sec-rule{flex:1; height:1px; background:var(--line);}
+
+  /* About */
+  .about-grid{display:grid; grid-template-columns:1.3fr 1fr; gap:56px;}
+  @media(max-width:820px){.about-grid{grid-template-columns:1fr;}}
+  .about-grid p{color:#c3cdd6; font-size:16px; margin:0 0 18px;}
+  .fact-list{border:1px solid var(--line); border-radius:4px; background:var(--panel);}
+  .fact-list div{display:flex; justify-content:space-between; padding:13px 18px; border-bottom:1px solid var(--line); font-size:14px;}
+  .fact-list div:last-child{border-bottom:none;}
+  .fact-list span:first-child{color:var(--muted); font-family:var(--mono); font-size:12.5px;}
+
+  /* Skills / sensor array */
+  .array{display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:4px; overflow:hidden;}
+  @media(max-width:700px){.array{grid-template-columns:1fr;}}
+  .array-cell{background:var(--panel); padding:26px 28px;}
+  .array-cell h3{font-family:var(--mono); font-size:12.5px; color:var(--accent); text-transform:uppercase; letter-spacing:1px; margin:0 0 16px;}
+  .chips{display:flex; flex-wrap:wrap; gap:8px;}
+  .chip{
+    font-family:var(--mono); font-size:12.5px; padding:6px 12px; border:1px solid var(--line);
+    border-radius:2px; color:#c3cdd6; background:var(--panel-2);
+  }
+
+  /* Timeline */
+  .timeline{position:relative; padding-left:32px;}
+  .timeline::before{content:'';position:absolute; left:5px; top:6px; bottom:6px; width:1px; background:var(--line);}
+  .tl-item{position:relative; padding-bottom:44px;}
+  .tl-item:last-child{padding-bottom:0;}
+  .tl-item::before{
+    content:''; position:absolute; left:-32px; top:4px; width:11px; height:11px; border-radius:50%;
+    background:var(--bg); border:2px solid var(--accent); box-shadow:0 0 0 4px var(--accent-dim);
+  }
+  .tl-item.past::before{border-color:var(--muted); box-shadow:none;}
+  .tl-head{display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-bottom:6px;}
+  .tl-role{font-family:var(--display); font-size:19px; font-weight:600;}
+  .tl-role span{color:var(--accent);}
+  .tl-date{font-family:var(--mono); font-size:12.5px; color:var(--muted); white-space:nowrap;}
+  .tl-org{font-family:var(--mono); font-size:13px; color:var(--muted); margin-bottom:12px;}
+  .tl-item ul{margin:0; padding-left:18px; color:#c3cdd6; font-size:14.5px;}
+  .tl-item li{margin-bottom:6px;}
+
+  /* Certs / education */
+  .card-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:20px;}
+  @media(max-width:700px){.card-grid{grid-template-columns:1fr;}}
+  .card{border:1px solid var(--line); border-radius:4px; padding:24px; background:var(--panel);}
+  .card h4{font-family:var(--display); font-size:16.5px; margin:0 0 6px;}
+  .card .meta{font-family:var(--mono); font-size:12px; color:var(--accent); margin-bottom:10px;}
+  .card p{margin:0; color:var(--muted); font-size:13.5px;}
+
+  /* Contact / footer */
+  footer{padding:80px 0 48px;}
+  .contact-panel{
+    border:1px solid var(--line); border-radius:6px; padding:52px; text-align:center;
+    background:radial-gradient(ellipse at 50% 0%, var(--accent-dim), transparent 70%), var(--panel);
+  }
+  .contact-panel h2{font-family:var(--display); font-size:clamp(26px,4vw,38px); margin:0 0 14px;}
+  .contact-panel p{color:var(--muted); margin:0 0 30px;}
+  .contact-links{display:flex; gap:14px; justify-content:center; flex-wrap:wrap;}
+  .footer-bottom{display:flex; justify-content:space-between; margin-top:56px; font-family:var(--mono); font-size:12px; color:var(--muted); flex-wrap:wrap; gap:10px;}
+
+  ::selection{background:var(--accent); color:#04140e;}
+  :focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important; transition:none !important;}
+  }
+</style>
+</head>
+<body>
+<div class="bg-grid"></div>
+
+<nav>
+  <div class="wrap">
+    <div class="brand"><span class="dot"></span>R. MALLAVARAPU</div>
+    <div class="navlinks">
+      <a href="#about" data-idx="01">ABOUT</a>
+      <a href="#skills" data-idx="02">SKILLS</a>
+      <a href="#experience" data-idx="03">EXPERIENCE</a>
+      <a href="#education" data-idx="04">EDUCATION</a>
+      <a href="#contact" data-idx="05">CONTACT</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <svg class="radar" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <circle cx="200" cy="200" r="180" fill="none" stroke="#1e2733" stroke-width="1"/>
+    <circle cx="200" cy="200" r="130" fill="none" stroke="#1e2733" stroke-width="1"/>
+    <circle cx="200" cy="200" r="80" fill="none" stroke="#1e2733" stroke-width="1"/>
+    <circle cx="200" cy="200" r="30" fill="none" stroke="#1e2733" stroke-width="1"/>
+    <line x1="20" y1="200" x2="380" y2="200" stroke="#1e2733" stroke-width="1"/>
+    <line x1="200" y1="20" x2="200" y2="380" stroke="#1e2733" stroke-width="1"/>
+    <g style="transform-origin:200px 200px; animation:spin 6s linear infinite;">
+      <defs>
+        <linearGradient id="sweep" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#00e5a0" stop-opacity="0"/>
+          <stop offset="100%" stop-color="#00e5a0" stop-opacity="0.55"/>
+        </linearGradient>
+      </defs>
+      <path d="M200,200 L200,20 A180,180 0 0,1 340,90 Z" fill="url(#sweep)"/>
+    </g>
+    <circle cx="255" cy="140" r="4" fill="#00e5a0"><animate attributeName="opacity" values="1;0.2;1" dur="2.4s" repeatCount="indefinite"/></circle>
+    <circle cx="150" cy="260" r="3" fill="#ffb454"><animate attributeName="opacity" values="0.3;1;0.3" dur="3.1s" repeatCount="indefinite"/></circle>
+    <circle cx="270" cy="255" r="3" fill="#00e5a0"><animate attributeName="opacity" values="1;0.3;1" dur="1.8s" repeatCount="indefinite"/></circle>
+  </svg>
+  <style>@keyframes spin{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}</style>
+
+  <div class="wrap">
+    <div class="eyebrow"><span class="line"></span>SOFTWARE ENGINEER · ADAS &amp; AUTONOMOUS SYSTEMS</div>
+    <h1 class="name">Rama Mallavarapu</h1>
+    <p class="role-line" id="roleLine">&nbsp;<span class="cursor">▌</span></p>
+    <p class="lede">I build the perception and sensor-fusion software that lets vehicles understand the world around them — from grid-based localization prototypes to safety-critical systems validated for series production.</p>
+
+    <div class="cta-row">
+      <a class="btn btn-primary" href="resumes/Rama_Mallavarapu_Resume_EN.pdf" download>↓ RESUME (EN)</a>
+      <a class="btn btn-ghost" href="resumes/Rama_Mallavarapu_Lebenslauf_DE.pdf" download>↓ LEBENSLAUF (DE)</a>
+      <a class="btn btn-ghost" href="#contact">CONTACT →</a>
+    </div>
+
+    <div class="hud">
+      <div><div class="val">6+</div><div class="lbl">Years in ADAS</div></div>
+      <div><div class="val">2</div><div class="lbl">Automotive OEM Suppliers</div></div>
+      <div><div class="val">ISO 26262</div><div class="lbl">Safety-Critical Dev.</div></div>
+      <div><div class="val">L4</div><div class="lbl">Autonomy Programs</div></div>
+    </div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">01</span><h2 class="sec-title">About</h2><span class="sec-rule"></span></div>
+    <div class="about-grid">
+      <div>
+        <p>I'm a Systems &amp; Software Engineer based in Berlin, currently at <strong>CARIAD</strong> (Volkswagen Group), working at the intersection of perception software and simulation-driven ML. Over the past six years I've moved from algorithm development to systems validation to, now, applied ML — always anchored in the same problem: helping a vehicle reliably detect, fuse, and interpret what its sensors see.</p>
+        <p>My background spans <strong>grid-based sensor fusion</strong> (radar + camera), <strong>KPI-driven perception validation</strong>, and safety-critical software delivery under ASPICE and ISO 26262. I've worked across the full lifecycle — from early-stage L4 sensor-set assessment to production-grade C++ implementation and series release sign-off.</p>
+        <p>I'm open to conversations on AI-driven mobility, safety-critical systems, and intelligent vehicle platforms.</p>
+      </div>
+      <div class="fact-list">
+        <div><span>LOCATION</span><span>Berlin, Germany</span></div>
+        <div><span>CURRENT</span><span>Simulation / ML Engineer, CARIAD</span></div>
+        <div><span>FOCUS</span><span>Sensor Fusion · Perception · ML</span></div>
+        <div><span>LANGUAGES</span><span>EN · DE · HI · TE</span></div>
+        <div><span>EMAIL</span><span>rama.mallavarapu@protonmail.com</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">02</span><h2 class="sec-title">Sensor Array — Skills</h2><span class="sec-rule"></span></div>
+    <div class="array">
+      <div class="array-cell">
+        <h3>Languages &amp; Frameworks</h3>
+        <div class="chips">
+          <span class="chip">C++</span><span class="chip">Python</span><span class="chip">MATLAB</span>
+          <span class="chip">ROS</span><span class="chip">HTML</span><span class="chip">Angular</span><span class="chip">C#</span>
+        </div>
+      </div>
+      <div class="array-cell">
+        <h3>Core Domains</h3>
+        <div class="chips">
+          <span class="chip">Sensor Fusion</span><span class="chip">Computer Vision</span>
+          <span class="chip">Perception Systems</span><span class="chip">Grid-Based Localization</span>
+          <span class="chip">Algorithm Development</span>
+        </div>
+      </div>
+      <div class="array-cell">
+        <h3>Tools &amp; Infrastructure</h3>
+        <div class="chips">
+          <span class="chip">Git</span><span class="chip">Codebeamer</span><span class="chip">JIRA</span>
+          <span class="chip">Confluence</span><span class="chip">Jenkins</span><span class="chip">CI/CD</span>
+          <span class="chip">GoogleTest</span><span class="chip">TPT</span><span class="chip">Conan</span><span class="chip">Unity</span>
+        </div>
+      </div>
+      <div class="array-cell">
+        <h3>Standards &amp; Methods</h3>
+        <div class="chips">
+          <span class="chip">ASPICE SWE1–SWE6</span><span class="chip">ISO 26262</span><span class="chip">ASIL</span>
+          <span class="chip">V-Model</span><span class="chip">SAFe</span><span class="chip">Scrum</span>
+          <span class="chip">Clean Code</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">03</span><h2 class="sec-title">Experience</h2><span class="sec-rule"></span></div>
+    <div class="timeline">
+
+      <div class="tl-item">
+        <div class="tl-head">
+          <div class="tl-role">Simulation / <span>ML Engineer</span></div>
+          <div class="tl-date">OCT 2025 — PRESENT</div>
+        </div>
+        <div class="tl-org">CARIAD · Berlin, Germany</div>
+        <ul>
+          <li>Developing and validating simulation-based ML approaches for perception and sensor-fusion performance evaluation.</li>
+          <li>Applying ML techniques to strengthen detection-quality and robustness KPI frameworks used in series validation.</li>
+        </ul>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-head">
+          <div class="tl-role">Systems / Development Engineer</div>
+          <div class="tl-date">SEP 2022 — OCT 2025</div>
+        </div>
+        <div class="tl-org">CARIAD · Berlin, Germany</div>
+        <ul>
+          <li>Validated ADAS systems against the V-Model, including fault analysis and feedback through to series release sign-off.</li>
+          <li>Defined perception requirements and interfaces in Codebeamer, ASPICE-compliant.</li>
+          <li>Built KPI frameworks for detection quality and robustness; automated KPI test pipelines for early defect discovery.</li>
+          <li>Implemented safety-relevant algorithms in C++ per ISO 26262 and ASIL.</li>
+          <li>Migrated test cases from TPT to GoogleTest; ran unit, integration, and system testing.</li>
+          <li>Led an internal learning group promoting agile and engineering best practices.</li>
+        </ul>
+      </div>
+
+      <div class="tl-item past">
+        <div class="tl-head">
+          <div class="tl-role">Algorithm Developer</div>
+          <div class="tl-date">FEB 2018 — JUL 2022</div>
+        </div>
+        <div class="tl-org">ZF Mobility Solutions GmbH · Ingolstadt, Germany</div>
+        <ul>
+          <li>Developed grid-based sensor fusion algorithms combining radar and camera data for autonomous driving functions.</li>
+          <li>Defined KPIs and implemented automated test suites for perception system evaluation.</li>
+          <li>Led technical assessment of sensor sets and system architecture for L4 autonomous driving programs.</li>
+          <li>Optimized assessment processes and built internal collaboration tooling using Angular, Flask, and HTML.</li>
+        </ul>
+      </div>
+
+      <div class="tl-item past">
+        <div class="tl-head">
+          <div class="tl-role">Master Thesis Student</div>
+          <div class="tl-date">APR 2017 — DEC 2017</div>
+        </div>
+        <div class="tl-org">IEE · Gaimersheim, Germany</div>
+        <ul>
+          <li>Completed master's thesis research within an automotive sensing environment.</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">04</span><h2 class="sec-title">Education &amp; Certifications</h2><span class="sec-rule"></span></div>
+    <div class="card-grid">
+      <div class="card">
+        <h4>M.Sc., Automotive Engineering Technology</h4>
+        <div class="meta">TH Ingolstadt · 2015 – 2017</div>
+        <p>Focus: Driver Assistance Systems, Sensing, Mechatronics</p>
+      </div>
+      <div class="card">
+        <h4>B.Tech., Mechanical Engineering</h4>
+        <div class="meta">JNTUH College of Engineering, Hyderabad · 2010 – 2014</div>
+        <p>Foundation in mechanical systems and engineering fundamentals.</p>
+      </div>
+      <div class="card">
+        <h4>Speexx German — CEFR B2.2</h4>
+        <div class="meta">Certification</div>
+        <p>Professional working proficiency in German.</p>
+      </div>
+      <div class="card">
+        <h4>C++ / ASPICE / Requirements Writing</h4>
+        <div class="meta">Certifications</div>
+        <p>C++ course completion, Automotive SPICE basics, requirements engineering.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="contact-panel">
+      <h2>Let's talk signal.</h2>
+      <p>Open to conversations on AI-driven mobility, safety-critical systems, and intelligent vehicle platforms.</p>
+      <div class="contact-links">
+        <a class="btn btn-primary" href="mailto:rama.mallavarapu@protonmail.com">EMAIL ME</a>
+        <a class="btn btn-ghost" href="https://www.linkedin.com/in/ramamallavarapu" target="_blank" rel="noopener">LINKEDIN</a>
+        <a class="btn btn-ghost" href="resumes/Rama_Mallavarapu_Resume_EN.pdf" download>RESUME (EN)</a>
+        <a class="btn btn-ghost" href="resumes/Rama_Mallavarapu_Lebenslauf_DE.pdf" download>LEBENSLAUF (DE)</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="year"></span> RAMA MALLAVARAPU — BERLIN, DE</span>
+      <span>BUILT WITH C++ HABITS, DEPLOYED WITH GITHUB ACTIONS</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Typewriter role line
+  const roles = [
+    "Sensor Fusion  //  Radar + Camera",
+    "Perception Systems  //  ISO 26262",
+    "Grid-Based Localization",
+    "C++  ·  Python  ·  ROS  ·  MATLAB",
+    "ADAS Validation  //  ASPICE"
+  ];
+  const el = document.getElementById('roleLine');
+  const cursor = '<span class="cursor">▌</span>';
+  let ri = 0, ci = 0, deleting = false;
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function tick(){
+    if(reduceMotion){ el.innerHTML = roles[0] + cursor; return; }
+    const full = roles[ri];
+    if(!deleting){
+      ci++;
+      el.innerHTML = full.slice(0, ci) + cursor;
+      if(ci === full.length){ deleting = true; setTimeout(tick, 1400); return; }
+    } else {
+      ci--;
+      el.innerHTML = full.slice(0, ci) + cursor;
+      if(ci === 0){ deleting = false; ri = (ri + 1) % roles.length; }
+    }
+    setTimeout(tick, deleting ? 28 : 48);
+  }
+  tick();
+</script>
+</body>
+</html>
