@@ -209,6 +209,7 @@
   .array{display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:4px; overflow:hidden;}
   @media(max-width:700px){.array{grid-template-columns:1fr;}}
   .array-cell{background:var(--panel); padding:26px 28px;}
+  .array-cell:last-child:nth-child(odd){grid-column:1 / -1;}
   .array-cell h3{font-family:var(--mono); font-size:12.5px; color:var(--accent); text-transform:uppercase; letter-spacing:1px; margin:0 0 16px;}
   .chips{display:flex; flex-wrap:wrap; gap:8px;}
   .chip{
@@ -365,10 +366,10 @@
   <div class="wrap">
     <div class="hero-grid">
       <div class="hero-main">
-        <div class="eyebrow"><span class="line"></span>SOFTWARE ENGINEER · ADAS &amp; AUTONOMOUS SYSTEMS</div>
+        <div class="eyebrow"><span class="line"></span>SOFTWARE ENGINEER · ADAS, AUTONOMOUS SYSTEMS &amp; AI</div>
         <h1 class="name">Rama Mallavarapu</h1>
         <p class="role-line" id="roleLine">&nbsp;<span class="cursor">▌</span></p>
-        <p class="lede">I build the perception and sensor-fusion software that lets vehicles understand the world around them — from grid-based localization prototypes to safety-critical systems validated for series production.</p>
+        <p class="lede">I build the perception and sensor-fusion software that lets vehicles understand the world around them — from grid-based localization prototypes to safety-critical systems validated for series production. Today I also apply ML and LLM agents, from simulation-driven perception validation to my own project, AIme.</p>
 
         <div class="cta-row">
           <a class="btn btn-primary" href="https://github.com/ram3917" target="_blank" rel="noopener">GITHUB ↗</a>
@@ -395,12 +396,13 @@
       <div>
         <p>I'm a Systems &amp; Software Engineer based in Berlin, currently at <strong>CARIAD</strong> (Volkswagen Group), working at the intersection of perception software and simulation-driven ML. Over the past six years I've moved from algorithm development to systems validation to, now, applied ML — always anchored in the same problem: helping a vehicle reliably detect, fuse, and interpret what its sensors see.</p>
         <p>My background spans <strong>grid-based sensor fusion</strong> (radar + camera), <strong>KPI-driven perception validation</strong>, and safety-critical software delivery under ASPICE and ISO 26262. I've worked across the full lifecycle — from early-stage L4 sensor-set assessment to production-grade C++ implementation and series release sign-off.</p>
+        <p>Beyond the vehicle, I build applied AI on my own time. <strong><a href="https://github.com/ram3917/Rama_AIMe" target="_blank" rel="noopener">AIme</a></strong> is a personal assistant, personal trainer and dietician that runs on a local LLM (Ollama) and is orchestrated as a multi-node <strong>LangGraph</strong> agent. It routes each Telegram message to the right specialist, uses tool calling against Notion and Garmin data, and asks for human confirmation before writing anything.</p>
         <p>I'm open to conversations on AI-driven mobility, safety-critical systems, and intelligent vehicle platforms.</p>
       </div>
       <div class="fact-list">
         <div><span>LOCATION</span><span>Berlin, Germany</span></div>
         <div><span>CURRENT</span><span>Simulation / ML Engineer, CARIAD</span></div>
-        <div><span>FOCUS</span><span>Sensor Fusion · Perception · ML</span></div>
+        <div><span>FOCUS</span><span>Sensor Fusion · Perception · ML · LLM Agents</span></div>
         <div><span>LANGUAGES</span><span>EN · DE · HI · TE</span></div>
         <div><span>EMAIL</span><span>rama.mallavarapu@protonmail.com</span></div>
       </div>
@@ -412,6 +414,14 @@
   <div class="wrap">
     <div class="sec-head"><span class="sec-num">02</span><h2 class="sec-title">Sensor Array — Skills</h2><span class="sec-rule"></span></div>
     <div class="array">
+      <div class="array-cell">
+        <h3>AI &amp; Machine Learning</h3>
+        <div class="chips">
+          <span class="chip">LLM Agents</span><span class="chip">LangGraph</span><span class="chip">Tool Calling</span>
+          <span class="chip">Ollama (local LLMs)</span><span class="chip">Human-in-the-Loop</span>
+          <span class="chip">Simulation-Based ML</span><span class="chip">Notion API</span>
+        </div>
+      </div>
       <div class="array-cell">
         <h3>Languages &amp; Frameworks</h3>
         <div class="chips">
@@ -565,6 +575,7 @@
     "Sensor Fusion  //  Radar + Camera",
     "Perception Systems  //  ISO 26262",
     "Grid-Based Localization",
+    "Applied AI  //  LLM Agents  //  LangGraph",
     "C++  ·  Python  ·  ROS  ·  MATLAB",
     "ADAS Validation  //  ASPICE"
   ];
